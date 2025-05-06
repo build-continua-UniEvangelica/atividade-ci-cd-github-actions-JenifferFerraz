@@ -63,15 +63,22 @@ jobs:
           npx playwright install --with-deps
           npx playwright install chromium
 
+      - name: Verificar porta 8080
+        run: |
+          lsof -i :8080 || true
+          killall -9 node || true
+
       - name: Iniciar servidor de desenvolvimento
         run: |
           npm run dev &
-          sleep 5
+          echo "Aguardando servidor iniciar..."
+          npx wait-on http://localhost:8080 -t 60000
 
-      -  name: Rodar testes
-         run: npx playwright test
-         env:
+      - name: Rodar testes
+        run: npx playwright test
+        env:
           CI: true
+          PLAYWRIGHT_TEST_BASE_URL: http://localhost:8080/balance-on-tap/
           PORT: 8080
 
       - name: Upload relatório de testes
