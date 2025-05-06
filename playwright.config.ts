@@ -5,9 +5,9 @@ export default defineConfig({
   webServer: {
     command: 'npm run dev',
     url: 'http://localhost:8080/balance-on-tap/',
-    reuseExistingServer: true, 
+    reuseExistingServer: true,
     port: 8080,
-    timeout: 120 * 1000 
+    timeout: 120 * 1000
   },
   use: {
     baseURL: 'http://localhost:8080/balance-on-tap/',
@@ -20,5 +20,12 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-  reporter: ['html', ['list']],
+  reporter: [
+    ['html'],
+    ['list']
+  ],
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined
 });
