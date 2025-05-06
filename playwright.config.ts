@@ -16,7 +16,7 @@ export default defineConfig({
   webServer: {
     command: 'npm run dev',
     url: 'http://localhost:8080/balance-on-tap/',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
     timeout: 120 * 100
   },
   /* Run tests in files in parallel */
